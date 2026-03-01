@@ -39,7 +39,13 @@ body {
 
 @media (max-width: 768px) {
     .container {
-        padding: 0 2rem;
+        padding: 0 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
     }
 }
 
@@ -106,8 +112,79 @@ header.scrolled {
 nav ul {
     display: flex;
     list-style: none;
-    gap: 3.5rem;
+    gap: 2.5rem;
     align-items: center;
+}
+
+/* Menu Toggle Button */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--dorado);
+    border-radius: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-container {
+        padding: 0.8rem 1.5rem;
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background: var(--verde-botella);
+        padding: 8rem 2rem;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+    }
+
+    nav.active {
+        right: 0;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 2.5rem;
+        align-items: center;
+    }
+
+    nav a {
+        font-size: 1.2rem;
+    }
+
+    /* Hamburger Animation */
+    .menu-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
 }
 
 nav a {
@@ -236,6 +313,21 @@ nav a:not(.cta-header):hover::after {
     align-items: center;
 }
 
+@media (max-width: 480px) {
+    .hero-btns {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .btn-hero {
+        width: 100%;
+        text-align: center;
+        padding: 1rem 2rem;
+    }
+}
+
 .btn-hero {
     padding: 1.2rem 2.5rem;
     border-radius: 50px;
@@ -326,6 +418,12 @@ nav a:not(.cta-header):hover::after {
 
 .ritual-card {
     text-align: center;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+.ritual-card.highlighted {
+    z-index: 10;
 }
 
 .ritual-img {
@@ -360,6 +458,12 @@ nav a:not(.cta-header):hover::after {
     padding: 2rem 0;
     position: relative;
     width: 100%;
+    cursor: grab;
+    user-select: none;
+}
+
+.productos-marquee:active {
+    cursor: grabbing;
 }
 
 .productos-track {
@@ -374,7 +478,10 @@ nav a:not(.cta-header):hover::after {
 }
 
 .producto-card {
-    width: 400px;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    width: 350px;
     background: var(--beige-crudo);
     border-radius: 20px;
     overflow: hidden;
@@ -388,7 +495,8 @@ nav a:not(.cta-header):hover::after {
 }
 
 .producto-image {
-    height: 250px;
+    width: 100%;
+    aspect-ratio: 4 / 3;
     overflow: hidden;
 }
 
@@ -578,16 +686,119 @@ nav a:not(.cta-header):hover::after {
     z-index: 2;
 }
 
-.novedades .section-divider {
-    margin: 2rem auto 0;
+.novedades-grid {
+    display: none;
+    /* Removed as we are using orbit system now */
+}
+
+.orbit-container {
+    position: relative;
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4rem auto 0;
+    max-width: 1400px;
+}
+
+.orbit-wrapper {
+    position: absolute;
+    width: 0;
+    /* Acts as the exact center point */
+    height: 0;
+    top: 50%;
+    left: 50%;
+}
+
+.orbit-item {
+    position: absolute;
+    width: 320px;
+    /* Explicitly centering on the pivot */
+    margin-left: -160px;
+    margin-top: -200px;
+    left: 0;
+    top: 0;
+
+    /* CSS Variables for orbital placement */
+    --angle: 0deg;
+    --radius: 280px;
+    --scale: 0.8;
+
+    /* The Magic Formula */
+    transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(var(--scale));
+
+    opacity: 0.4;
+    z-index: 1;
+    cursor: pointer;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.8s ease,
+        z-index 0.4s step-end;
+}
+
+/* Base product card adjustments for orbit */
+.orbit-item .producto-card {
+    margin: 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: var(--blanco);
+    border-radius: 20px;
+    width: 100%;
+}
+
+.orbit-item.active {
+    z-index: 10;
+    opacity: 1;
+    --scale: 1.1;
+    /* Reduced slightly from 1.15 to keep it sharp */
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.8s ease,
+        z-index 0s step-start;
+    /* Instantly pop to top when active */
+}
+
+.orbit-item.active .producto-card {
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Removed Center Logo */
+
+@media (max-width: 768px) {
+    .orbit-container {
+        height: 700px;
+    }
+
+    .orbit-item {
+        width: 260px;
+        left: -130px;
+        top: -180px;
+        --radius: 200px;
+        /* Increased from JS's 170 to prevent overlap */
+    }
+
+    .orbit-center {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Smaller scale for back items on mobile */
+    .orbit-item:not(.active) {
+        --scale: 0.7;
+    }
 }
 
 .novedades .producto-card {
     background: var(--blanco);
-    /* Pure white cards stand out on cream background */
     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(209, 179, 143, 0.1);
     border-radius: 24px;
+    width: 100%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, opacity;
+}
+
+.novedades .producto-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
 }
 
 .novedades .producto-name {
@@ -598,19 +809,6 @@ nav a:not(.cta-header):hover::after {
 .novedades .producto-description {
     color: var(--verde-botella);
     opacity: 0.8;
-}
-
-.novedades .productos-marquee {
-    padding: 3rem 0;
-}
-
-.novedades .producto-card {
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.novedades .producto-card:hover {
-    transform: translateY(-15px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
 }
 
 /* === GLOBAL SECTIONS === */
@@ -894,7 +1092,7 @@ footer {
     }
 
     100% {
-        transform: translateX(calc(-400px * 3 - 3rem * 3));
+        transform: translateX(calc(-350px * 3 - 3rem * 3));
     }
 }
 
@@ -909,8 +1107,24 @@ footer {
 }
 
 @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
