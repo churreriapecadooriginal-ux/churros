@@ -220,3 +220,30 @@ document.querySelectorAll('[data-close]').forEach(function (el) {
         });
     }
 });
+
+// Custom Cursor Follower
+const initCursorFocus = () => {
+    const cursor = document.getElementById('cursorFocus');
+    if (!cursor) return;
+
+    window.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+
+    // Expand on interactive elements
+    document.querySelectorAll('a, button, .producto-card, .ritual-card').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.style.width = '450px';
+            cursor.style.height = '450px';
+            cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0) 70%)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.style.width = '300px';
+            cursor.style.height = '300px';
+            cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0) 70%)';
+        });
+    });
+};
+
+initCursorFocus();
