@@ -346,9 +346,11 @@ nav a:not(.cta-header):hover::after {
 }
 
 .btn-hero-primary:hover {
-    background: var(--verde-oscuro);
+    background: var(--dorado);
+    border-color: var(--dorado);
+    color: var(--primary-cocoa);
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(11, 61, 46, 0.5);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4);
 }
 
 .btn-hero-secondary {
@@ -359,7 +361,8 @@ nav a:not(.cta-header):hover::after {
 
 .btn-hero-secondary:hover {
     background: var(--blanco);
-    color: var(--verde-botella);
+    color: var(--primary-cocoa);
+    border-color: var(--blanco);
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
@@ -690,98 +693,34 @@ nav a:not(.cta-header):hover::after {
     /* Removed as we are using orbit system now */
 }
 
-.orbit-container {
+.novedades-carousel {
+    overflow: hidden;
+    padding: 2rem 0;
     position: relative;
-    height: 900px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 4rem auto 0;
-    max-width: 1400px;
-}
-
-.orbit-wrapper {
-    position: absolute;
-    width: 0;
-    /* Acts as the exact center point */
-    height: 0;
-    top: 50%;
-    left: 50%;
-}
-
-.orbit-item {
-    position: absolute;
-    width: 320px;
-    /* Explicitly centering on the pivot */
-    margin-left: -160px;
-    margin-top: -200px;
-    left: 0;
-    top: 0;
-
-    /* CSS Variables for orbital placement */
-    --angle: 0deg;
-    --radius: 280px;
-    --scale: 0.8;
-
-    /* The Magic Formula */
-    transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1)) scale(var(--scale));
-
-    opacity: 0.4;
-    z-index: 1;
-    cursor: pointer;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.8s ease,
-        z-index 0.4s step-end;
-}
-
-/* Base product card adjustments for orbit */
-.orbit-item .producto-card {
-    margin: 0;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    background: var(--blanco);
-    border-radius: 20px;
     width: 100%;
 }
 
-.orbit-item.active {
-    z-index: 10;
-    opacity: 1;
-    --scale: 1.1;
-    /* Reduced slightly from 1.15 to keep it sharp */
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 0.8s ease,
-        z-index 0s step-start;
-    /* Instantly pop to top when active */
+.carousel-track {
+    display: flex;
+    gap: 3rem;
+    padding: 2rem 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
 }
 
-.orbit-item.active .producto-card {
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+.carousel-track::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
-
-/* Removed Center Logo */
+.carousel-item {
+    flex: 0 0 350px;
+    scroll-snap-align: start;
+}
 
 @media (max-width: 768px) {
-    .orbit-container {
-        height: 700px;
-    }
-
-    .orbit-item {
-        width: 260px;
-        left: -130px;
-        top: -180px;
-        --radius: 200px;
-        /* Increased from JS's 170 to prevent overlap */
-    }
-
-    .orbit-center {
-        width: 100px;
-        height: 100px;
-    }
-
-    /* Smaller scale for back items on mobile */
-    .orbit-item:not(.active) {
-        --scale: 0.7;
+    .carousel-item {
+        flex: 0 0 300px;
     }
 }
 
