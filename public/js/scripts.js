@@ -236,12 +236,12 @@ const initCursorFocus = () => {
         el.addEventListener('mouseenter', () => {
             cursor.style.width = '450px';
             cursor.style.height = '450px';
-            cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(212, 175, 55, 0) 70%)';
+            cursor.style.background = 'radial-gradient(circle, rgba(209, 179, 143, 0.25) 0%, rgba(209, 179, 143, 0) 70%)';
         });
         el.addEventListener('mouseleave', () => {
             cursor.style.width = '300px';
             cursor.style.height = '300px';
-            cursor.style.background = 'radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0) 70%)';
+            cursor.style.background = 'radial-gradient(circle, rgba(209, 179, 143, 0.15) 0%, rgba(209, 179, 143, 0) 70%)';
         });
     });
 };
